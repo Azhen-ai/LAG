@@ -1,0 +1,1 @@
+发现控制tacview链接的文件是tacview.py，当选择real_time的时候会调用这个，然后会一直监听tacview，我先给它注释掉试试

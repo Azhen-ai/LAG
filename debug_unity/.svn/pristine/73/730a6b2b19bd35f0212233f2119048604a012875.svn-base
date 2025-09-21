@@ -1,0 +1,26 @@
+# pack-refs with: peeled fully-peeled sorted 
+6b0b3702775566690b681e402b4df43a676290a1 refs/remotes/origin/gh-pages
+0ac6194e3558c224accdd836545ef3c26d15f63c refs/remotes/origin/master
+659602db4d0d8909388381ba64faf1756207640f refs/remotes/origin/release/v1.1
+9e857f49c42d2d8a8e925d849bbc006be5597f43 refs/remotes/origin/release/v1.2
+4fe1aa72cd4234824f686b9495194f2ef5556774 refs/remotes/origin/v1.0.0
+127d2d0b395f8cfbe288453f216c202a4e83f09e refs/tags/Linux
+fb5a11ee1450ddbc9ae8612c65331fa42431f786 refs/tags/v1.1.0
+072ea48debe9134cd28d55f502a7989ecb137e41 refs/tags/v1.1.10
+10e077b486c42d38e76d1dd7f0aeb744f92d96a0 refs/tags/v1.1.11
+133fcff53ae15abcbbbd4d06390e1b59ab76e5c6 refs/tags/v1.1.12
+a09715f01b9e568ce75ca2635ba0a78ce57f7cdd refs/tags/v1.1.13
+95777fde0cce31f53a5b2848e871df9a6172231a refs/tags/v1.1.14
+c11b0ac53846798bca8f60132ebf8df935e1a802 refs/tags/v1.1.1a
+954711f7b19c0c6c0697501e36bc2406cd501a12 refs/tags/v1.1.2
+532107b31a4f74cc1937b7a934136cc7c1998442 refs/tags/v1.1.3
+366b9d4e35eebbcc95b9eda09f1de8b15564e281 refs/tags/v1.1.4
+e407a683c05fd03bab8b1da1c0c88b2465a30c8b refs/tags/v1.1.5
+b477f6312bee2fd3af4c4e5ba1a3e732ed2b99d4 refs/tags/v1.1.6
+c3b2da9079fe11cfe869616f44ed3e3e9676fb30 refs/tags/v1.1.7
+^6584d8702fb0907f316054419456d07bde26dfa4
+17bf67e0f74e50efd9dbb5177db61df2fa19ab6a refs/tags/v1.1.8
+^c943f83deeb3e14bed7939ac65dfac789a7a0181
+56bb9b9cfbcd06d80afd682cea42b9d049488824 refs/tags/v1.1.9
+4864e7389676bc0e9ac487b087650db74a31204c refs/tags/v1.2.0
+9b95d1b5ccff59916c79a0e3eb8f548377910598 refs/tags/v1.2.1
