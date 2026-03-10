@@ -1,15 +1,14 @@
 import numpy as np
 import torch
 
-import sys
-import os
 
-current_script_path = os.path.abspath(__file__)
-project_root = os.path.dirname(os.path.dirname(current_script_path))
-sys.path.append(project_root)
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+RESULT_DIR = BASE_DIR / "results"
 
 from envs.JSBSim.envs import SingleCombatEnv, SingleControlEnv, MultipleCombatEnv
-from envs.env_wrappers import SubprocVecEnv, DummyVecEnv
 from envs.JSBSim.core.catalog import Catalog as c
 from algorithms.ppo.ppo_actor import PPOActor
 import logging
@@ -39,8 +38,8 @@ enm_policy_index = 0
 episode_rewards = 0
 
 '''地址改一下'''
-ego_run_dir = "/home/lqh/jyh/CloseAirCombat/scripts/results/SingleCombat/1v1/NoWeapon/HierarchySelfplay/ppo/artillery_check/wandb/latest-run/files"
-enm_run_dir = "/home/lqh/jyh/CloseAirCombat/scripts/results/SingleCombat/1v1/NoWeapon/HierarchySelfplay/ppo/artillery_check/wandb/latest-run/files"
+ego_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
+enm_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
 experiment_name = ego_run_dir.split('/')[-4]
 
 env = SingleCombatEnv("1v1/NoWeapon/Selfplay")
@@ -52,14 +51,14 @@ enm_policy = PPOActor(args, env.observation_space, env.action_space, device=torc
 ego_policy.eval()
 enm_policy.eval()
 #选择模型
-ego_policy.load_state_dict(torch.load(ego_run_dir + f"/actor_{ego_policy_index}.pt"))
-enm_policy.load_state_dict(torch.load(enm_run_dir + f"/actor_{enm_policy_index}.pt"))
+ego_policy.load_state_dict(torch.load(ego_run_dir + f"/actor_{ego_policy_index}.pt", map_location="cpu"))
+enm_policy.load_state_dict(torch.load(enm_run_dir + f"/actor_{enm_policy_index}.pt", map_location="cpu"))
 
 
 print("Start render")
 obs = env.reset()
 if render:
-    env.render(mode='txt', filepath=f'{experiment_name}.txt.acmi')
+    env.render(mode='unity3d', filepath=f'{experiment_name}.txt.acmi')
 ego_rnn_states = np.zeros((1, 1, 128), dtype=np.float32)
 masks = np.ones((num_agents // 2, 1))
 enm_obs =  obs[num_agents // 2:, :]
