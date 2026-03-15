@@ -37,7 +37,6 @@ ego_policy_index = 1040
 enm_policy_index = 0
 episode_rewards = 0
 
-'''地址改一下'''
 ego_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
 enm_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
 experiment_name = ego_run_dir.split('/')[-4]
@@ -57,6 +56,9 @@ enm_policy.load_state_dict(torch.load(enm_run_dir + f"/actor_{enm_policy_index}.
 
 print("Start render")
 obs = env.reset()
+
+env.start_acmi_stream()
+
 if render:
     env.render(mode='unity3d', filepath=f'{experiment_name}.txt.acmi')
 ego_rnn_states = np.zeros((1, 1, 128), dtype=np.float32)

@@ -7,6 +7,7 @@ from typing import Dict, Any, Tuple
 from ..core.simulatior import AircraftSimulator, BaseSimulator
 from ..tasks.task_base import BaseTask
 from ..utils.utils import parse_config
+from renders.real_time_transmitter import RealTimeACMITransmitter
 
 
 class BaseEnv(gymnasium.Env):
@@ -31,6 +32,8 @@ class BaseEnv(gymnasium.Env):
             getattr(self.config, 'battle_field_center', (120.0, 60.0, 0.0))
         self._create_records = False
         self.load()
+        self.transmitter = RealTimeACMITransmitter(host='127.0.0.1', port=5000)
+        self._header_sent = False
 
     @property
     def num_agents(self) -> int:
@@ -51,7 +54,23 @@ class BaseEnv(gymnasium.Env):
     @property
     def time_interval(self) -> int:
         return self.agent_interaction_steps / self.sim_freq
+    
+    def build_header(self):
+        return [
+            "FileType=text/acmi/tacview",
+            "FileVersion=2.1",
+            "0,ReferenceTime=2020-04-01T00:00:00Z",
+        ]
+    
+    def start_acmi_stream(self):
+        ok = self.transmitter.start_server()
+        if not ok:
+            raise RuntimeError("ACMI transmitter 启动失败")
 
+    def stop_acmi_stream(self):
+        if self.transmitter is not None:
+            self.transmitter.stop()
+            
     def load(self):
         self.load_task()
         self.load_simulator()
@@ -221,7 +240,11 @@ class BaseEnv(gymnasium.Env):
                     if log_msg is not None:
                         f.write(log_msg + "\n")
         elif mode == "unity3d":
-            print("Unity3D render is not implemented yet.")
+
+            if self.transmitter and self.transmitter.is_connected():
+                if not self._header_sent:
+                    self.transmitter.send_frame_data(self.build_header())
+                    self._header_sent = True
         elif mode == "real_time":
             timestamp = self.current_step * self.time_interval
             data = [f"#{timestamp:.2f}\n"]
