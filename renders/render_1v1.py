@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-
+import os
 
 from pathlib import Path
 
@@ -37,10 +37,11 @@ ego_policy_index = 1040
 enm_policy_index = 0
 episode_rewards = 0
 
-ego_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
-enm_run_dir = f"{RESULT_DIR}/results/SingleCombat/1v1/NoWeapon/Selfplay/ppo/v1/wandb/latest-run/files"
-experiment_name = ego_run_dir.split('/')[-4]
-
+# 修改为指定的路径
+ego_run_dir = r"E:\unityproject\1v1 noweapon\files"
+enm_run_dir = r"E:\unityproject\1v1 noweapon\files"
+# 修改experiment_name，从新路径获取
+experiment_name = os.path.basename(os.path.dirname(ego_run_dir)).replace(" ", "_")
 env = SingleCombatEnv("1v1/NoWeapon/Selfplay")
 env.seed(0)
 args = Args()
